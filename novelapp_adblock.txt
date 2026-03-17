@@ -1,8 +1,8 @@
-! Title: novelapp.apk 广告拦截规则 (终极版 v6)
+! Title: novelapp.apk 广告拦截规则 (终极版 v7)
 ! Description: novelapp.apk 全量扫描 + 内置DNS预解析表分析 + 用户实测补充规则合并
-! Version: 6.0.0
+! Version: 7.0.0
 ! Last modified: 2026-03-17
-! Entries: 170+
+! Entries: 200+
 !
 ! ═══════════════════════════════════════════════════════════════
 ! 重要说明（请务必阅读）
@@ -175,6 +175,15 @@
 ! ── 腾讯云广告推送精准域名 ───────────────────────────────────────
 ||apd-pcdnwxlogin.teg.tencent-cloud.net^
 
+! ── 穿山甲 SDK 广告平台（pangolin）───────────────────────────────
+||pangolin-sdk-toutiao.com^
+
+! ── 拼多多广告 ──────────────────────────────────────────────────
+||pinduoduo.com^
+
+! ── novelapp 视频服务器 ─────────────────────────────────────────
+||fqnovelvod.com^
+
 ! ── libavmdlv2.so 内嵌隐蔽追踪 ──────────────────────────────────
 ||tianwenca.com^
 ||qiezibenpao.com^
@@ -187,6 +196,48 @@
 ! ── 支付宝广告子域（精准拦截）────────────────────────────────────
 ||loggw-exsdk.alipay.com^
 ||render.alipay.com^
+
+! ══════════════════════════════════════════════════════════════════
+! URL 精过滤规则（阻断特定广告请求路径） v7新增
+! ══════════════════════════════════════════════════════════════════
+
+! 穿山甲SDK广告接口
+^https?:\/\/.+\.pangolin-sdk-toutiao\.com\/api\/ad\/union\/sdk\/(get_ads|stats|settings)\/ url reject
+^https?:\/\/.+\.pangolin-sdk-toutiao\.com\/  url reject
+
+! 头条视频广告
+^https?:\/\/.+\.pglstatp-toutiao\.com\/.+\.mp4  url reject
+
+! 广告图片资源（ad-app-package, ad, web.business.image）
+^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/(obj|img)\/(ad-app-package|ad)\/.+ url reject
+^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/(obj|img)\/web\.business\.image\/.+ url reject
+^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/obj\/ad-pattern\/renderer url reject
+
+! 广告包请求
+^https?:\/\/gurd\.snssdk\.com\/src\/server\/v3\/package url reject
+
+! 字节图片CDN广告图片
+^https?:\/\/.+\.byteimg\.com\/tos-cn-i-.+\/.*-jpeg\.jpeg url reject
+
+! 广告马赛克追踪
+^https?:\/\/.+\.pstatp\.com\/obj\/mosaic-legacy\/.+ url reject
+
+! 广告追踪日志
+^https?:\/\/.+\.pstatp\.com\/bytecom\/resource\/track_log\/src\/.+ url reject
+
+! 抖音/头条视频广告
+^https?:\/\/.+\.snssdk\.com\/video\/play\/1\/toutiao\/.+\/mp4 url reject
+^https?:\/\/.+\.snssdk\.com\/api\/ad\/.+ url reject
+
+! 字节图片CDN广告（HTTP）
+^http:\/\/.+\.byteimg\.com\/ad-app-package url reject
+^http:\/\/.+\.byteimg\.com\/web\.business\.image url reject
+
+! 拼多多广告跳转头条
+^https?:\/\/adim\.pinduoduo\.com\/.+\/toutiao\?.+ url reject
+
+! novelapp 视频广告
+^https?:\/\/.+novelapp\.fqnovelvod\.com\/.+\/video\/.+ url reject
 
 ! ══════════════════════════════════════════════════════════════════
 ! IP 封锁规则（AdGuard Home 支持 /etc/hosts 形式，需配合防火墙）
@@ -205,8 +256,8 @@
 !   iptables -I FORWARD -d 117.92.229.188 -j DROP
 !   iptables -I FORWARD -d 180.96.2.114 -j DROP
 
-! Total: 170+ rules · v6 · 2026-03-17
-! KEY CHANGE v6: 合并用户实测规则，新增 ixigua.com / byteorge.com / bytegoofy.com /
-!               p6-ad-sign.byteimg.com / p9-ad-sign.byteimg.com /
-!               精准snssdk子域 / easemob广告推送域名 /
-!               新增5个用户实测广告IP (49.71.37.101 等)
+! Total: 200+ rules · v7 · 2026-03-17
+! KEY CHANGE v7: 新增URL精过滤规则（阻断广告API/视频/图片路径）
+!               穿山甲SDK / pangolin-sdk-toutiao
+!               拼多多广告跳转 / fqnovelvod 视频服务器
+!               精准URL路径匹配（比纯域名拦截更精准）
