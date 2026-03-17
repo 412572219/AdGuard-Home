@@ -1,138 +1,120 @@
-! Title: novelapp.apk 广告拦截规则
-! Description: 从 novelapp.apk 静态分析中提取的广告、追踪、数据上报域名
-! Version: 1.0.0
+! Title: novelapp.apk 广告拦截规则 (精修版 v2)
+! Description: 从 novelapp.apk 静态分析 + 人工核查，覆盖广告投放/数据上报/设备追踪域名
+! Version: 2.0.0
 ! Last modified: 2026-03-17
-! Entries: 109
+! Entries: 93
 !
 ! 使用方法（AdGuard Home）:
-!   进入 AdGuard Home → 过滤器 → DNS 封锁清单 → 添加自定义列表
-!   将此文件内容粘贴或上传文件 URL 即可生效
+!   过滤器 → DNS 封锁清单 → 添加自定义列表，粘贴本文件内容或上传 URL
 !
-! 兼容格式: AdGuard Home · Pi-hole · uBlock Origin
+! 兼容: AdGuard Home · Pi-hole · uBlock Origin
 !
-! 规则格式说明:
-!   ||domain^  屏蔽该域名及其全部子域名的 DNS 解析
+! 注意: 华为/小米条目会影响相关厂商设备推送，如有需要可删除对应分组
 !
 
-! ── 字节跳动系 / 穿山甲 Pangle 广告联盟 (65) ──────────────────────────────
-||abtest-ch.snssdk.com^
-||ad.zijieapi.com^
-||api.snssdk.com^
-||api5-normal-sinfonlinea.fqnovel.com^
-||applog.snssdk.com^
-||applog.zijieapi.com^
-||aweme.snssdk.com^
-||boe.i.snssdk.com^
-||bsync.snssdk.com^
-||clue.oceanengine.com^
-||coverage-data-center.bytedance.net^
-||dpprofile.snssdk.com^
-||ecom.snssdk.com^
-||effect.snssdk.com^
-||hotsoon.snssdk.com^
-||i-boe.snssdk.com^
-||i.snssdk.com^
-||ib.snssdk.com^
-||ic.snssdk.com^
-||ichannel.snssdk.com^
-||is.snssdk.com^
-||lf-fe.fqnovelstatic.com^
-||lf26-reading.fqnovelstatic.com^
-||lf3-reading.fqnovelpic.com^
-||lf3-reading.fqnovelstatic.com^
-||lf3-static.bytednsdoc.com^
-||log.bytedance.net^
-||log.snssdk.com^
-||log.zijieapi.com^
-||mon.snssdk.com^
-||mssdk-cn.bytedance.com^
-||open-admin.bytedance.net^
-||open.bytedanceapi.com^
-||p1-luckycatopen.byteimg.com^
-||p1-reading.byteimg.com^
-||p29-tt.byteimg.com^
-||p3-ecop-imagex.byteimg.com^
-||p3-novel.byteimg.com^
-||p3-reading-sign.fqnovelpic.com^
-||p3-reading.byteimg.com^
-||p6-novel.byteimg.com^
-||p9-piu.byteimg.com^
-||p9-reading.byteimg.com^
-||pa.bytedance.com^
-||pgcv.snssdk.com^
-||polaris.zijieapi.com^
-||rc-boe.snssdk.com^
-||rc.snssdk.com^
-||reading.snssdk.com^
-||report.snssdk.com^
-||rtapplog.snssdk.com^
-||rtlog.snssdk.com^
-||rtlog.zijieapi.com^
-||scc.bytedance.com^
-||sdk.toutiao.com^
-||security.snssdk.com^
-||security.zijieapi.com^
-||sf1-cdn-tos.douyinstatic.com^
-||test-aweme.snssdk.com^
-||tmaportal.snssdk.com^
-||tobid.snssdk.com^
-||tp-pay.snssdk.com^
-||tp-pay.snssdk.com.boe-gateway.byted.org^
-||verify.snssdk.com^
-||vod-urls.bytedanceapi.com^
+! ── 字节跳动系 / 穿山甲 Pangle 广告联盟 (68) ──────────────────────────────
+||activity-ag.awemeughun.com^  ! 抖音活动广告
+||amemv.com^  ! 抖音备用 API
+||api.amemv.com^  ! 抖音备用 API
+||appcloud.bytedance.net^  ! 字节应用云
+||applog.snssdk.com^  ! 字节应用日志上报
+||awemeughun.com^  ! 抖音活动域名
+||bsync-goapi-boe.bytedance.net^  ! 字节同步 API
+||byted.org^  ! 字节跳动内部服务
+||bytedance.com^  ! 字节跳动核心服务（含广告）
+||bytedance.net^  ! 字节跳动内部网络服务
+||bytedanceapi.com^  ! 字节跳动 API 服务
+||bytednsdoc.com^  ! 字节跳动文档/静态资源 CDN
+||bytegecko.com^  ! 字节跳动 Gecko 动态下发框架（广告资源）
+||byteimg.com^  ! 字节跳动图片 CDN（广告素材）
+||byteoversea.com^  ! 字节跳动海外数据上报
+||bytescm.com^  ! 字节跳动 SCM CDN
+||bytetos.com^  ! 字节跳动对象存储 CDN
+||byteversea.com^  ! 字节海外服务
+||captcha.web.bytedance.net^  ! 字节验证码（设备指纹）
+||cloud-ws.douyin.com^  ! 抖音云 WebSocket
+||douyinstatic.com^  ! 抖音静态资源
+||dpt.bytedance.net^  ! 字节数据平台
+||draftstatic.com^  ! 字节跳动草稿静态资源
+||dycloud.volces.com^  ! 字节抖音云服务
+||ecombdapi.com^  ! 字节电商 API（广告转化）
+||fanqiesdk.com^  ! 番茄 SDK
+||fn.bytedance.net^  ! 字节跳动函数服务/数据上报
+||fqnovel.com^  ! 番茄小说 API
+||fqnovelpic.com^  ! 番茄小说图片资源（含广告素材）
+||fqnovelstatic.com^  ! 番茄小说静态资源
+||gecko.zijieapi.com^  ! 字节 Gecko 配置下发
+||growth.ecombdapi.com^  ! 字节电商转化追踪
+||iesdouyin.com^  ! 抖音资源域名
+||jsb.zijieapi.com^  ! 字节 JS Bridge 接口
+||ma.zijieapi.com^  ! 字节 MA 广告接口
+||minigame.zijieapi.com^  ! 字节小游戏广告接口
+||mobile.web.bytedance.net^  ! 字节移动 Web 服务
+||mon.zijieapi.com^  ! 字节监控上报
+||ndcpp.com^  ! 字节跳动 VC/视频相关 CDN
+||novelfm.com^  ! 番茄 FM API
+||oceanengine.com^  ! 巨量引擎广告平台
+||open-client.douyin.com^  ! 抖音开放平台客户端接口
+||open-sandbox.douyin.com^  ! 抖音沙盒开放接口
+||open.douyin.com^  ! 抖音开放平台
+||piu.byteimg.com^  ! 字节图片 CDN
+||pstatp.com^  ! 字节跳动旧资源 CDN
+||qa.web.bytedance.net^  ! 字节 QA Web
+||rc.zijieapi.com^  ! 字节远程配置
+||relation.zijieapi.com^  ! 字节社交关系接口
+||rmc.bytedance.com^  ! 字节资源管理/广告
+||rtapplog.snssdk.com^  ! 字节实时应用日志
+||rtlog.snssdk.com^  ! 字节实时日志
+||settings.ttwebview.com^  ! 字节 WebView 配置
+||snssdk.com^  ! 字节跳动全系 SDK 根域名（广告、日志、行为追踪）
+||timon.zijieapi.com^  ! 字节 Timon 服务
+||toutiao.com^  ! 今日头条（广告投放、数据上报）
+||toutiaoapi.com^  ! 头条 API（广告）
+||toutiaocloud.com^  ! 头条云服务（数据上报）
+||toutiaocloud.net^  ! 头条云服务（数据上报）
+||ttwebview.com^  ! 字节 WebView 配置下发
+||ugflow.gf.bytedance.net^  ! 字节用户增长流量
+||unblock.web.bytedance.net^  ! 字节解锁服务
+||unpkg.byted-static.com^  ! 字节静态资源 CDN
+||vcs-boe.bytedance.net^  ! 字节 VCS BOE 环境
+||vcs.zijieapi.com^  ! 字节版本控制接口
+||volces.com^  ! 火山引擎（字节旗下云服务）
+||webcast-open.douyin.com^  ! 抖音直播开放接口
+||zijieapi.com^  ! 字节跳动 API 根域名（广告投放、日志上报）
 
-! ── 腾讯广告 GDT / 优量汇 (5) ──────────────────────────────
-||e.qq.com^
-||gdtimg.com^
-||h.trace.qq.com^
-||imgcache.qq.com^
-||openmobile.qq.com^
+! ── 腾讯广告 GDT / 优量汇 (7) ──────────────────────────────
+||cgi.connect.qq.com^  ! QQ 连接 CGI
+||cgi.qplus.com^  ! 腾讯 Q+ 广告接口
+||e.qq.com^  ! 腾讯广点通 GDT 广告投放
+||gdtimg.com^  ! 腾讯 GDT 广告图片 CDN
+||h.trace.qq.com^  ! 腾讯行为追踪上报
+||imgcache.qq.com^  ! QQ 图片缓存 CDN（广告素材）
+||openmobile.qq.com^  ! 腾讯移动开放 SDK（含广告）
 
-! ── 行为日志 / 埋点上报 (3) ──────────────────────────────
-||mon.toutiao.com^
-||mon.toutiaocloud.com^
-||mon.toutiaocloud.net^
+! ── 华为 HMS 统计分析 / 推送 (5) ──────────────────────────────
+||dbankcloud.asia^  ! 华为 HMS 亚区数据
+||dbankcloud.cn^  ! 华为 HMS 数据上报/统计
+||dbankcloud.com^  ! 华为 HMS 数据上报
+||dbankcloud.ru^  ! 华为 HMS 俄区数据
+||hicloud.com^  ! 华为云服务（统计分析）
 
-! ── 统计分析 SDK (5) ──────────────────────────────
-||metrics-dra.dt.hicloud.com^
-||metrics1-drcn.dt.dbankcloud.cn^
-||metrics2.data.hicloud.com^
-||metrics5.data.hicloud.com^
-||metrics5.dt.dbankcloud.ru^
+! ── 小米推送服务 (2) ──────────────────────────────
+||resolver.msg.xiaomi.net^  ! 小米推送 DNS 解析
+||xmpush.xiaomi.com^  ! 小米推送服务（含广告推送）
 
-! ── 广告推送通知 (5) ──────────────────────────────
-||cn.register.xmpush.xiaomi.com^
-||data-dra.push.dbankcloud.com^
-||data-drcn.push.dbankcloud.com^
-||data-dre.push.dbankcloud.com^
-||data-drru.push.dbankcloud.com^
+! ── 设备识别 / 行为追踪 (1) ──────────────────────────────
+||megvii.com^  ! 旷视科技人脸/设备识别（隐私追踪）
 
-! ── 其他广告相关域名 (26) ──────────────────────────────
-||99uri.com^
-||api.fanqiesdk.com^
-||api.toutiaoapi.com^
-||apps.bytesfield.com^
-||edgesdk.data.kuiniuca.com^
-||g.aiplayer.cn^
-||lf-dy-sourcecdn-tos.bytegecko.com^
-||lf-normal-gr-sourcecdn.bytegecko.com^
-||lf-sourcecdn-tos.bytegecko.com^
-||lf-webcast-sourcecdn-tos.bytegecko.com^
-||m.toutiao.com^
-||mon-va.byteoversea.com^
-||monsetting.toutiao.com^
-||nativeapp.toutiao.com^
-||open.douyin.com^
-||open.weibo.cn^
-||praisewindow.ugsdk.cn^
-||rrp.baohuaxia.com^
-||seeds-open.xinqiucc.com^
-||service.weibo.com^
-||tosv.byted.org^
-||webcast-open.douyin.com^
-||www.chengzijianzhan.com^
-||zhanzhang.toutiao.com^
-||zlink.toutiao.com^
-||zlink.ugsdk.cn^
+! ── 其他广告 SDK / 追踪平台 (10) ──────────────────────────────
+||99uri.com^  ! 广告短链/跳转服务
+||aiplayer.cn^  ! 第三方广告播放器
+||baohuaxia.com^  ! 第三方广告 SDK
+||dig.bdurl.net^  ! 百度短链/广告跳转
+||edgesdk.data.kuiniuca.com^  ! 第三方 EdgeSDK 数据
+||id6.me^  ! 广告追踪/归因服务
+||kuiniuca.com^  ! 第三方 SDK 数据上报
+||ttxyajs.data.kuiniuca.com^  ! 第三方数据上报
+||ugsdk.cn^  ! 第三方广告 SDK 推送/跳转
+||xinqiucc.com^  ! 第三方活动/广告 SDK
 
-! Total: 109 rules · Generated from novelapp.apk static analysis · 2026-03-17
+! Total: 93 rules · novelapp.apk static analysis · 2026-03-17
