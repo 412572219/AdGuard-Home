@@ -1,12 +1,12 @@
-! Title: novelapp.apk/ipa 广告拦截规则 (终极版 v8)
-! Description: 合并 Android APK + iOS IPA 分析 + 用户实测规则
-! Version: 8.0.0
+! Title: novelapp.apk/ipa 广告拦截规则 (终极版 v9)
+! Description: 合并 Android APK + iOS IPA + 用户实测规则
+! Version: 9.0.0
 ! Last modified: 2026-03-17
-! Entries: 220+
+! Entries: 250+
 !
-! ═══════════════════════════════════════════════════════════════
+! ═══════════════════════════════════════════════════════════════════════
 ! 重要说明（请务必阅读）
-! ═══════════════════════════════════════════════════════════════
+! ═══════════════════════════════════════════════════════════════════════
 ! 经深度分析发现，novelapp 内置了"DNS预解析表"：
 !   "dig.bdurl.net" → 101.36.166.16/17/18/19 (IP直连)
 !   "dig.zjurl.cn"  → 101.36.166.16/17/18/19 (同上)
@@ -74,6 +74,7 @@
 ||pglstatp-toutiao.com^
 ||bytecdn.cn^
 ||s3.bytecdn.cn^
+||bytemaimg.com^
 
 ! 字节 WebView / 远程配置
 ||ttwebview.com^
@@ -84,7 +85,11 @@
 ||toutiaocloud.com^
 ||toutiaocloud.net^
 
-! 抖音/直播相关（iOS IPA 新发现）
+! 抖音/直播/视频流CDN（用户新增：douyincdn/douyinliving）
+||douyincdn.com^
+||douyinliving.com^
+
+! 抖音/直播相关
 ||douyin.com^
 ||douyinstatic.com^
 ||douyinpic.com^
@@ -92,7 +97,6 @@
 ||aweme.com^
 ||amemv.com^
 ||iesdouyin.com^
-||douyinstatic.com^
 
 ! 巨量引擎广告平台
 ||oceanengine.com^
@@ -103,6 +107,9 @@
 
 ! 番茄 SDK
 ||fanqiesdk.com^
+
+! 番茄小说核心域名（用户新增）
+||fqnovel.com^
 
 ! 字节安全链接（广告落地页）
 ||xseclink.cn^
@@ -254,6 +261,11 @@
 ! novelapp 视频广告
 ^https?:\/\/.+novelapp\.fqnovelvod\.com\/.+\/video\/.+ url reject
 
+! 番茄小说广告API（用户新增）
+^https?:\/\/api5-normal-.+\.fqnovel\.com\/ url reject
+^https?:\/\/mon11-.+\.fqnovel\.com\/ url reject
+^https?:\/\/log0-applog-.+\.fqnovel\.com\/ url reject
+
 ! ══════════════════════════════════════════════════════════════════
 ! IP 封锁规则（AdGuard Home 支持 /etc/hosts 形式，需配合防火墙）
 ! ══════════════════════════════════════════════════════════════════
@@ -271,10 +283,9 @@
 !   iptables -I FORWARD -d 117.92.229.188 -j DROP
 !   iptables -I FORWARD -d 180.96.2.114 -j DROP
 
-! Total: 220+ rules · v8 · 2026-03-17
-! KEY CHANGE v8: 合并 iOS IPA 分析结果
-!   - 新增 douyinstatic.com / douyinpic.com (抖音静态资源)
-!   - 新增 bytecdn.cn / s3.bytecdn.cn (字节CDN)
-!   - 新增字节直播CDN子域 (lf-webcast-*.bytegecko.com / douyinstatic.com)
-!   - 新增 aweme.com (抖音国际版)
-!   - iOS 版本硬编码域名较少，主要通过动态加载
+! Total: 250+ rules · v9 · 2026-03-17
+! KEY CHANGE v9: 
+!   - 新增 douyincdn.com / douyinliving.com (抖音视频流CDN)
+!   - 新增 fqnovel.com 整域 (番茄小说核心)
+!   - 新增 bytemaimg.com (字节图片CDN)
+!   - 新增 URL 规则阻断 fqnovel.com 广告API
