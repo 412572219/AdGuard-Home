@@ -1,0 +1,138 @@
+! Title: novelapp.apk 广告拦截规则
+! Description: 从 novelapp.apk 静态分析中提取的广告、追踪、数据上报域名
+! Version: 1.0.0
+! Last modified: 2026-03-17
+! Entries: 109
+!
+! 使用方法（AdGuard Home）:
+!   进入 AdGuard Home → 过滤器 → DNS 封锁清单 → 添加自定义列表
+!   将此文件内容粘贴或上传文件 URL 即可生效
+!
+! 兼容格式: AdGuard Home · Pi-hole · uBlock Origin
+!
+! 规则格式说明:
+!   ||domain^  屏蔽该域名及其全部子域名的 DNS 解析
+!
+
+! ── 字节跳动系 / 穿山甲 Pangle 广告联盟 (65) ──────────────────────────────
+||abtest-ch.snssdk.com^
+||ad.zijieapi.com^
+||api.snssdk.com^
+||api5-normal-sinfonlinea.fqnovel.com^
+||applog.snssdk.com^
+||applog.zijieapi.com^
+||aweme.snssdk.com^
+||boe.i.snssdk.com^
+||bsync.snssdk.com^
+||clue.oceanengine.com^
+||coverage-data-center.bytedance.net^
+||dpprofile.snssdk.com^
+||ecom.snssdk.com^
+||effect.snssdk.com^
+||hotsoon.snssdk.com^
+||i-boe.snssdk.com^
+||i.snssdk.com^
+||ib.snssdk.com^
+||ic.snssdk.com^
+||ichannel.snssdk.com^
+||is.snssdk.com^
+||lf-fe.fqnovelstatic.com^
+||lf26-reading.fqnovelstatic.com^
+||lf3-reading.fqnovelpic.com^
+||lf3-reading.fqnovelstatic.com^
+||lf3-static.bytednsdoc.com^
+||log.bytedance.net^
+||log.snssdk.com^
+||log.zijieapi.com^
+||mon.snssdk.com^
+||mssdk-cn.bytedance.com^
+||open-admin.bytedance.net^
+||open.bytedanceapi.com^
+||p1-luckycatopen.byteimg.com^
+||p1-reading.byteimg.com^
+||p29-tt.byteimg.com^
+||p3-ecop-imagex.byteimg.com^
+||p3-novel.byteimg.com^
+||p3-reading-sign.fqnovelpic.com^
+||p3-reading.byteimg.com^
+||p6-novel.byteimg.com^
+||p9-piu.byteimg.com^
+||p9-reading.byteimg.com^
+||pa.bytedance.com^
+||pgcv.snssdk.com^
+||polaris.zijieapi.com^
+||rc-boe.snssdk.com^
+||rc.snssdk.com^
+||reading.snssdk.com^
+||report.snssdk.com^
+||rtapplog.snssdk.com^
+||rtlog.snssdk.com^
+||rtlog.zijieapi.com^
+||scc.bytedance.com^
+||sdk.toutiao.com^
+||security.snssdk.com^
+||security.zijieapi.com^
+||sf1-cdn-tos.douyinstatic.com^
+||test-aweme.snssdk.com^
+||tmaportal.snssdk.com^
+||tobid.snssdk.com^
+||tp-pay.snssdk.com^
+||tp-pay.snssdk.com.boe-gateway.byted.org^
+||verify.snssdk.com^
+||vod-urls.bytedanceapi.com^
+
+! ── 腾讯广告 GDT / 优量汇 (5) ──────────────────────────────
+||e.qq.com^
+||gdtimg.com^
+||h.trace.qq.com^
+||imgcache.qq.com^
+||openmobile.qq.com^
+
+! ── 行为日志 / 埋点上报 (3) ──────────────────────────────
+||mon.toutiao.com^
+||mon.toutiaocloud.com^
+||mon.toutiaocloud.net^
+
+! ── 统计分析 SDK (5) ──────────────────────────────
+||metrics-dra.dt.hicloud.com^
+||metrics1-drcn.dt.dbankcloud.cn^
+||metrics2.data.hicloud.com^
+||metrics5.data.hicloud.com^
+||metrics5.dt.dbankcloud.ru^
+
+! ── 广告推送通知 (5) ──────────────────────────────
+||cn.register.xmpush.xiaomi.com^
+||data-dra.push.dbankcloud.com^
+||data-drcn.push.dbankcloud.com^
+||data-dre.push.dbankcloud.com^
+||data-drru.push.dbankcloud.com^
+
+! ── 其他广告相关域名 (26) ──────────────────────────────
+||99uri.com^
+||api.fanqiesdk.com^
+||api.toutiaoapi.com^
+||apps.bytesfield.com^
+||edgesdk.data.kuiniuca.com^
+||g.aiplayer.cn^
+||lf-dy-sourcecdn-tos.bytegecko.com^
+||lf-normal-gr-sourcecdn.bytegecko.com^
+||lf-sourcecdn-tos.bytegecko.com^
+||lf-webcast-sourcecdn-tos.bytegecko.com^
+||m.toutiao.com^
+||mon-va.byteoversea.com^
+||monsetting.toutiao.com^
+||nativeapp.toutiao.com^
+||open.douyin.com^
+||open.weibo.cn^
+||praisewindow.ugsdk.cn^
+||rrp.baohuaxia.com^
+||seeds-open.xinqiucc.com^
+||service.weibo.com^
+||tosv.byted.org^
+||webcast-open.douyin.com^
+||www.chengzijianzhan.com^
+||zhanzhang.toutiao.com^
+||zlink.toutiao.com^
+||zlink.ugsdk.cn^
+
+! Total: 109 rules · Generated from novelapp.apk static analysis · 2026-03-17
