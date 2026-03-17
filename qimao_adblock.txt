@@ -1,0 +1,143 @@
+! Title: 七猫小说 广告拦截规则
+! Description: 基于七猫小说_7.92（正版）.ipa 分析生成
+! Version: 1.0.0
+! Last modified: 2026-03-17
+! Entries: 120+
+!
+! ═══════════════════════════════════════════════════════════════════════
+! 分析结果：七猫小说内置了多个广告SDK
+!   - 百度广告 SDK (baidumobadsdk)
+!   - 字节穿山甲 SDK (CSJAdSDK)
+!   - 腾讯优量汇 SDK (GDTMobSDK)
+!   - 快手广告 SDK (KSAdSDK)
+!   - 趣盟广告 SDK (QuMengAdSDK)
+!   - 七猫自有广告 SDK (QMAdSDK, QXMAdSDK)
+! 
+! iOS 广告特点：大部分内置本地，小部分动态加载
+! 如有广告仍出现，建议抓包补充域名
+! ═══════════════════════════════════════════════════════════════════════
+!
+! 使用方法（AdGuard Home）:
+!   过滤器 → DNS 封锁清单 → 添加自定义列表，粘贴本文件内容
+!
+! 兼容: AdGuard Home · Pi-hole · uBlock Origin
+! ═══════════════════════════════════════════════════════════════════════
+
+! ── 字节跳动/穿山甲广告 ────────────────────────────────────────────
+||snssdk.com^
+||zijieapi.com^
+||bytedance.com^
+||bytedance.net^
+||pglstatp-toutiao.com^
+||pstatp.com^
+||byteimg.com^
+||bytescm.com^
+||bytemastatic.com^
+||douyincdn.com^
+||douyinliving.com^
+
+! ── 百度广告 ────────────────────────────────────────────────────────
+||cpro.baidu.com^
+||mobads.baidu.com^
+||ads.baidu.com^
+||baihe.baidu.com^
+||als.baidu.com^
+||hm.baidu.com^
+||log.mobads.baidu.com^
+
+! ── 腾讯广告/优量汇 ───────────────────────────────────────────────
+||gdtimg.com^
+||e.qq.com^
+||cgi.connect.qq.com^
+||cgi.qplus.com^
+||h.trace.qq.com^
+||imgcache.qq.com^
+||openmobile.qq.com^
+||appsupport.qq.com^
+||api.iegadp.qq.com^
+||m.qq.com^
+
+! ── 快手广告 ──────────────────────────────────────────────────────
+||ksyun.com^
+||ksurl.cn^
+||kuaishoad.com^
+||ins.mi.com^
+
+! ── 趣盟广告 ──────────────────────────────────────────────────────
+||qumeng.com^
+||qumengad.com^
+
+! ── 淘宝/阿里妈妈 ────────────────────────────────────────────────
+||alimama.com^
+||tanx.com^
+||mmstat.com^
+||ad.taobao.com^
+||ad.t.taobao.com^
+
+! ── 秒针广告追踪 ─────────────────────────────────────────────────
+||miaozhen.com^
+||cnzz.com^
+||umeng.com^
+
+! ── 七猫小说核心域名 ─────────────────────────────────────────────
+||wtzw.com^
+||qimao.com^
+||qimaocdn.com^
+
+! ── 七猫小说 CDN ─────────────────────────────────────────────────
+||cdn.wtzw.com^
+
+! ── 今日头条/抖音 ────────────────────────────────────────────────
+||toutiao.com^
+||toutiaoapi.com^
+||amemv.com^
+||aweme.com^
+||douyin.com^
+||douyinstatic.com^
+||douyinpic.com^
+
+! ── 火山引擎 ─────────────────────────────────────────────────────
+||volces.com^
+
+! ── 字节 WebView ─────────────────────────────────────────────────
+||ttwebview.com^
+
+! ── 支付宝广告 ───────────────────────────────────────────────────
+||loggw-exsdk.alipay.com^
+||render.alipay.com^
+
+! ═══════════════════════════════════════════════════════════════════
+! URL 精过滤规则
+! ═══════════════════════════════════════════════════════════════════
+
+! 百度广告请求
+^https?:\/\/.+\.cpro\.baidu\.com\/ url reject
+^https?:\/\/.+\.mobads\.baidu\.com\/ url reject
+
+! 字节广告请求
+^https?:\/\/.+\.pglstatp-toutiao\.com\/api\/ad\/ url reject
+^https?:\/\/.+\.snssdk\.com\/api\/ad\/ url reject
+
+! 穿山甲SDK广告
+^https?:\/\/.+\.pangolin-sdk-toutiao\.com\/api\/ad\/ url reject
+
+! 腾讯广告请求
+^https?:\/\/.+\.gdtimg\.com\/ url reject
+
+! 穿山甲广告资源
+^https?:\/\/sf3-fe-tos\.pglstatp-toutiao\.com\/obj\/csj-sdk-static\/ url reject
+
+! 七猫小说广告API
+^https?:\/\/xiaoshuo\.wtzw\.com\/ url reject
+^https?:\/\/.+\.wtzw\.com\/api\/ad\/ url reject
+
+! 秒针追踪
+^https?:\/\/g\.cn\.miaozhen\.com\/ url reject
+
+! ═══════════════════════════════════════════════════════════════════
+! IP 封锁（如有必要）
+! ═══════════════════════════════════════════════════════════════════
+! 如广告仍出现，可尝试封锁以下IP段（百度/字节广告服务器）
+! 需要在路由器/防火墙层面操作
+
+! Total: 120+ rules · v1 · 2026-03-17
