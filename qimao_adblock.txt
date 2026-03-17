@@ -1,25 +1,26 @@
-! Title: 七猫小说 广告拦截规则
-! Description: 基于七猫小说_7.92（正版）.ipa 分析生成
-! Version: 1.0.0
+! Title: 七猫小说 广告拦截规则 (增强版 v2)
+! Description: 基于七猫小说_7.92（正版）.ipa 分析生成 + 优量汇/美数增强
+! Version: 2.0.0
 ! Last modified: 2026-03-17
-! Entries: 120+
+! Entries: 160+
 !
 ! ═══════════════════════════════════════════════════════════════════════
 ! 分析结果：七猫小说内置了多个广告SDK
 !   - 百度广告 SDK (baidumobadsdk)
 !   - 字节穿山甲 SDK (CSJAdSDK)
-!   - 腾讯优量汇 SDK (GDTMobSDK)
+!   - 腾讯优量汇 SDK (GDTMobSDK) ← 用户反馈仍有广告
+!   - 美数广告 ← 用户反馈仍有广告
 !   - 快手广告 SDK (KSAdSDK)
 !   - 趣盟广告 SDK (QuMengAdSDK)
 !   - 七猫自有广告 SDK (QMAdSDK, QXMAdSDK)
-! 
+!
 ! iOS 广告特点：大部分内置本地，小部分动态加载
 ! 如有广告仍出现，建议抓包补充域名
 ! ═══════════════════════════════════════════════════════════════════════
-!
+
 ! 使用方法（AdGuard Home）:
 !   过滤器 → DNS 封锁清单 → 添加自定义列表，粘贴本文件内容
-!
+
 ! 兼容: AdGuard Home · Pi-hole · uBlock Origin
 ! ═══════════════════════════════════════════════════════════════════════
 
@@ -45,9 +46,21 @@
 ||hm.baidu.com^
 ||log.mobads.baidu.com^
 
-! ── 腾讯广告/优量汇 ───────────────────────────────────────────────
+! ═══════════════════════════════════════════════════════════════════════
+! 腾讯广告/优量汇 (v2 增强版)
+! ═══════════════════════════════════════════════════════════════════════
+
+! 优量汇核心域名
 ||gdtimg.com^
+||gdt.qq.com^
+||gdtunion.qq.com^
 ||e.qq.com^
+||ad.qq.com^
+||cpc.qq.com^
+||mqqad.qq.com^
+||adsdk.qq.com^
+||mobile.qq.com^
+||wsa.qq.com^
 ||cgi.connect.qq.com^
 ||cgi.qplus.com^
 ||h.trace.qq.com^
@@ -56,6 +69,36 @@
 ||appsupport.qq.com^
 ||api.iegadp.qq.com^
 ||m.qq.com^
+||graph.qq.com^
+||p.tencent.com^
+
+! 优量汇数据上报
+||log.qq.com^
+||log1.qq.com^
+||tcss.qq.com^
+||tc.qq.com^
+||tpush.qq.com^
+
+! ── 美数广告 (v2 新增)
+! ═══════════════════════════════════════════════════════════════════════
+
+! 美数核心域名
+||meishu.com^
+||meisu.com^
+||misscdn.com^
+||msoo.cn^
+||adx.cn^
+||98ad.com^
+
+! 美数广告备用
+||mediation.98ad.com^
+||sdk.meishu.com^
+
+! 美数广告请求
+||ad.qingpingshan.com^
+||adp.qingpingshan.com^
+
+! ═══════════════════════════════════════════════════════════════════════
 
 ! ── 快手广告 ──────────────────────────────────────────────────────
 ||ksyun.com^
@@ -102,7 +145,7 @@
 ! ── 字节 WebView ─────────────────────────────────────────────────
 ||ttwebview.com^
 
-! ── 支付宝广告 ───────────────────────────────────────────────────
+! ── 支付宝广告 ────────────────────────────────────────────────────
 ||loggw-exsdk.alipay.com^
 ||render.alipay.com^
 
@@ -121,8 +164,18 @@
 ! 穿山甲SDK广告
 ^https?:\/\/.+\.pangolin-sdk-toutiao\.com\/api\/ad\/ url reject
 
-! 腾讯广告请求
+! 腾讯优量汇广告请求 (v2 增强)
 ^https?:\/\/.+\.gdtimg\.com\/ url reject
+^https?:\/\/.+\.gdt\.qq\.com\/ url reject
+^https?:\/\/.+\.qq\.com\/gdt\/ url reject
+^https?:\/\/.+\.qq\.com\/ads\/ url reject
+^https?:\/\/.+\.qq\.com\/cpc\/ url reject
+^https?:\/\/.+\.e\.qq\.com\/ url reject
+
+! 美数广告请求 (v2 新增)
+^https?:\/\/.+\.meishu\.com\/ url reject
+^https?:\/\/.+\.meisu\.com\/ url reject
+^https?:\/\/.+\.98ad\.com\/ url reject
 
 ! 穿山甲广告资源
 ^https?:\/\/sf3-fe-tos\.pglstatp-toutiao\.com\/obj\/csj-sdk-static\/ url reject
@@ -136,8 +189,12 @@
 
 ! ═══════════════════════════════════════════════════════════════════
 ! IP 封锁（如有必要）
-! ═══════════════════════════════════════════════════════════════════
+! ═══════════════════════════════════════════════════════════════════════
 ! 如广告仍出现，可尝试封锁以下IP段（百度/字节广告服务器）
 ! 需要在路由器/防火墙层面操作
 
-! Total: 120+ rules · v1 · 2026-03-17
+! Total: 160+ rules · v2 · 2026-03-17
+! KEY CHANGE v2:
+!   - 新增优量汇完整域名覆盖
+!   - 新增美数广告域名
+!   - 新增优量汇/美数URL路径拦截
