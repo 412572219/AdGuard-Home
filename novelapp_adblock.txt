@@ -1,42 +1,31 @@
-! Title: novelapp.apk 广告拦截规则 (终极版 v7)
-! Description: novelapp.apk 全量扫描 + 内置DNS预解析表分析 + 用户实测补充规则合并
-! Version: 7.0.0
+! Title: novelapp.apk 广告拦截规则 (深度版 v3)
+! Description: 从 novelapp.apk 深度静态分析(DEX+SO+Assets全扫描)，覆盖广告投放/数据上报/设备追踪/第三方广告联盟域名
+! Version: 3.0.0
 ! Last modified: 2026-03-17
-! Entries: 200+
-!
-! ═══════════════════════════════════════════════════════════════
-! 重要说明（请务必阅读）
-! ═══════════════════════════════════════════════════════════════
-! 经深度分析发现，novelapp 内置了"DNS预解析表"：
-!   "dig.bdurl.net" → 101.36.166.16/17/18/19 (IP直连)
-!   "dig.zjurl.cn"  → 101.36.166.16/17/18/19 (同上)
-! 这意味着 APP 会直接用 IP 访问广告服务器，绕过 DNS 拦截！
-!
-! 要彻底拦截广告，需要在 AdGuard Home 中：
-! 1. 启用 DNS 规则（本文件）
-! 2. 同时在路由器/防火墙添加如下 IP 封锁（见下方注释）
-!
-! ── IP直连广告服务器（需在防火墙层面封锁）──────────────────────
-! 101.36.166.16   (dig.bdurl.net / dig.zjurl.cn 广告跳转)
-! 101.36.166.17   (同上)
-! 101.36.166.18   (同上)
-! 101.36.166.19   (同上)
-! 49.71.37.101    (用户实测发现：广告IP直连)
-! 117.71.105.23   (用户实测发现：广告IP直连)
-! 218.94.207.205  (用户实测发现：广告IP直连)
-! 117.92.229.188  (用户实测发现：广告IP直连)
-! 180.96.2.114    (用户实测发现：广告IP直连)
-! ── 如果不封锁以上IP，部分广告将绕过DNS拦截继续显示 ────────────
+! Entries: 117
 !
 ! 使用方法（AdGuard Home）:
 !   过滤器 → DNS 封锁清单 → 添加自定义列表，粘贴本文件内容或上传 URL
 !
 ! 兼容: AdGuard Home · Pi-hole · uBlock Origin
-! ═══════════════════════════════════════════════════════════════
+!
+! v3 新增（相比 v2）:
+!   - 新增 bytemastatic.com / byted-static.com / bytesfield.com（字节 CDN/SDK）
+!   - 新增 tianwenca.com / qiezibenpao.com / xycdn.com（libavmdlv2.so 发现的隐蔽追踪域名）
+!   - 新增 online-metrix.net（ThreatMetrix 设备指纹追踪）
+!   - 新增 wtturl.cn / xseclink.cn / xseclink.com（字节安全链接/广告落地页）
+!   - 新增 chengzijianzhan.com（广告落地页建站服务）
+!   - 新增 ctdidcii.cn（CDN推广安装引导页）
+!   - 新增 loggw-exsdk.alipay.com 等支付宝广告追踪子域
+!   - 精准化：对 alipay.com 改为精准子域拦截，保留支付功能
+!   - 补全 douyin.com 子域广告接口
+!   - 新增 applog.zijieapi.com / log.zijieapi.com / report.snssdk.com 等日志域名
+!   - 新增 polaris.zijieapi.com（字节配置下发）
+!   - 新增 bytedanceapi.com vod-urls（视频广告CDN）
 
-! ── 字节跳动广告核心域名 ─────────────────────────────────────────
+! ── 字节跳动系 / 穿山甲 Pangle 广告联盟 ─────────────────────────────────
 
-! 字节核心根域（广告投放/SDK/日志/配置）
+! 字节核心根域名（广告投放/SDK/日志）
 ||snssdk.com^
 ||zijieapi.com^
 ||bytedance.com^
@@ -44,16 +33,7 @@
 ||bytedanceapi.com^
 ||byted.org^
 
-! 字节广告专用子域（内置DNS预解析表中的广告接口）
-||ad.zijieapi.com^
-||ads3-normal-lf.zijieapi.com^
-||ads3-normal-hl.zijieapi.com^
-||ads3-normal-lq.zijieapi.com^
-||ads5-normal-lf.zijieapi.com^
-||ads5-normal-hl.zijieapi.com^
-||ads5-normal-lq.zijieapi.com^
-
-! 字节 CDN / 广告素材下发
+! 字节 CDN / 静态资源（广告素材下发）
 ||bytednsdoc.com^
 ||bytegecko.com^
 ||byteimg.com^
@@ -64,55 +44,52 @@
 ||bytemastatic.com^
 ||byted-static.com^
 ||bytesfield.com^
-||bytesfield-b.com^
 ||pstatp.com^
 ||ndcpp.com^
 ||draftstatic.com^
-||byteorge.com^
-||bytegoofy.com^
-||sf3-ttcdn-tos.pstatp.com^
-||pglstatp-toutiao.com^
 
-! 字节 WebView / 远程配置
+! 字节 WebView / 配置下发
 ||ttwebview.com^
+||bytegecko.com^
 
-! 今日头条
+! 今日头条 / 广告上报
 ||toutiao.com^
 ||toutiaoapi.com^
 ||toutiaocloud.com^
 ||toutiaocloud.net^
 
-! 抖音广告接口
+! 抖音相关接口（广告/行为追踪）
 ||iesdouyin.com^
 ||douyinstatic.com^
 ||amemv.com^
 ||awemeughun.com^
-||douyin.com^
-||activity-ag.awemeughun.com^
 
-! 巨量引擎广告平台
+! 字节抖音开放接口（广告转化追踪）
+||open-client.douyin.com^
+||open-sandbox.douyin.com^
+||open.douyin.com^
+||open-boe.douyin.com^
+||open-client-boe.douyin.com^
+||webcast-open.douyin.com^
+||webcast.amemv.com^
+||cloud-ws.douyin.com^
+
+! 巨量引擎 / 穿山甲广告平台
 ||oceanengine.com^
 ||ecombdapi.com^
 
-! 火山引擎（数据上报）
+! 火山引擎（字节云服务/数据上报）
 ||volces.com^
 
-! 番茄 SDK
+! 番茄 SDK（广告/追踪）
 ||fanqiesdk.com^
 
-! 字节安全链接（广告落地页）
+! 字节安全链接（广告落地页检测/跳转）
 ||xseclink.cn^
 ||xseclink.com^
 ||wtturl.cn^
 
-! 西瓜视频广告接口（用户实测新增）
-||ixigua.com^
-
-! ── 广告短链/跳转服务 ───────────────────────────────────────────
-||dig.bdurl.net^
-||dig.zjurl.cn^
-
-! ── 腾讯广告 GDT / 优量汇 ───────────────────────────────────────
+! ── 腾讯广告 GDT / 优量汇 ───────────────────────────────────────────────
 ||gdtimg.com^
 ||e.qq.com^
 ||cgi.connect.qq.com^
@@ -121,143 +98,50 @@
 ||imgcache.qq.com^
 ||openmobile.qq.com^
 ||appsupport.qq.com^
-||api.iegadp.qq.com^
 
-! ── 华为 HMS 数据上报 / 推送 ────────────────────────────────────
+! ── 华为 HMS 统计分析 / 推送 ────────────────────────────────────────────
 ||dbankcloud.cn^
 ||dbankcloud.com^
 ||dbankcloud.asia^
 ||dbankcloud.ru^
 ||dbankcloud.eu^
-||data-drcn.push.dbankcloud.com^
-||data-dra.push.dbankcloud.com^
-||data-dre.push.dbankcloud.com^
-||data-drru.push.dbankcloud.com^
-||grs.dbankcloud.com^
-||grs.dbankcloud.cn^
-||grs.dbankcloud.asia^
-||grs.platform.dbankcloud.ru^
-||grs.dbankcloud.eu^
 ||hicloud.com^
-||metrics5.data.hicloud.com^
 
-! ── 小米推送 ────────────────────────────────────────────────────
+! ── 小米推送服务 ────────────────────────────────────────────────────────
 ||xmpush.xiaomi.com^
 ||resolver.msg.xiaomi.net^
 
-! ── 设备识别 / 追踪 ──────────────────────────────────────────────
+! ── 设备识别 / 行为追踪 ─────────────────────────────────────────────────
 ||megvii.com^
 ||online-metrix.net^
 
-! ── 第三方广告 SDK / 追踪平台 ───────────────────────────────────
+! ── 第三方广告 SDK / 追踪平台 ───────────────────────────────────────────
 ||99uri.com^
 ||aiplayer.cn^
 ||baohuaxia.com^
-||kuiniuca.com^
+||dig.bdurl.net^
+||edgesdk.data.kuiniuca.com^
 ||id6.me^
+||kuiniuca.com^
+||ttxyajs.data.kuiniuca.com^
 ||ugsdk.cn^
 ||xinqiucc.com^
-||mcs.snssdk.com^
-||i.snssdk.com^
-||i-lq.snssdk.com^
-||is.snssdk.com^
-||security-lq.snssdk.com^
-||tnc3-alisc1.snssdk.com^
-||tnc3-aliec2.snssdk.com^
 
-! ── 广告图片CDN精准子域（用户实测新增）────────────────────────────
-||p6-ad-sign.byteimg.com^
-||p9-ad-sign.byteimg.com^
-
-! ── 易盾即时通讯（广告推送）───────────────────────────────────────
-||msync-im1-vip6-std.easemob.com^
-
-! ── 腾讯云广告推送精准域名 ───────────────────────────────────────
-||apd-pcdnwxlogin.teg.tencent-cloud.net^
-
-! ── 穿山甲 SDK 广告平台（pangolin）───────────────────────────────
-||pangolin-sdk-toutiao.com^
-
-! ── 拼多多广告 ──────────────────────────────────────────────────
-||pinduoduo.com^
-
-! ── novelapp 视频服务器 ─────────────────────────────────────────
-||fqnovelvod.com^
-
-! ── libavmdlv2.so 内嵌隐蔽追踪 ──────────────────────────────────
+! ── 新发现：libavmdlv2.so 隐蔽追踪域名 ─────────────────────────────────
+! 天问茶 SDK 数据上报（libavmdlv2.so 内嵌）
 ||tianwenca.com^
+! 切字奔跑（可疑广告/数据节点）
 ||qiezibenpao.com^
+! 星域 CDN（广告素材/推广内容 CDN）
 ||xycdn.com^
 
-! ── 广告落地页 / 推广建站 ────────────────────────────────────────
+! ── 广告落地页 / 推广建站 ───────────────────────────────────────────────
 ||chengzijianzhan.com^
 ||ctdidcii.cn^
 
-! ── 支付宝广告子域（精准拦截）────────────────────────────────────
+! ── 支付宝广告追踪子域（精准拦截，保留支付功能） ────────────────────────
+! 注意：仅拦截广告/追踪相关子域，mclient.alipay.com 等支付域名不在此列
 ||loggw-exsdk.alipay.com^
 ||render.alipay.com^
 
-! ══════════════════════════════════════════════════════════════════
-! URL 精过滤规则（阻断特定广告请求路径） v7新增
-! ══════════════════════════════════════════════════════════════════
-
-! 穿山甲SDK广告接口
-^https?:\/\/.+\.pangolin-sdk-toutiao\.com\/api\/ad\/union\/sdk\/(get_ads|stats|settings)\/ url reject
-^https?:\/\/.+\.pangolin-sdk-toutiao\.com\/  url reject
-
-! 头条视频广告
-^https?:\/\/.+\.pglstatp-toutiao\.com\/.+\.mp4  url reject
-
-! 广告图片资源（ad-app-package, ad, web.business.image）
-^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/(obj|img)\/(ad-app-package|ad)\/.+ url reject
-^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/(obj|img)\/web\.business\.image\/.+ url reject
-^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/obj\/ad-pattern\/renderer url reject
-
-! 广告包请求
-^https?:\/\/gurd\.snssdk\.com\/src\/server\/v3\/package url reject
-
-! 字节图片CDN广告图片
-^https?:\/\/.+\.byteimg\.com\/tos-cn-i-.+\/.*-jpeg\.jpeg url reject
-
-! 广告马赛克追踪
-^https?:\/\/.+\.pstatp\.com\/obj\/mosaic-legacy\/.+ url reject
-
-! 广告追踪日志
-^https?:\/\/.+\.pstatp\.com\/bytecom\/resource\/track_log\/src\/.+ url reject
-
-! 抖音/头条视频广告
-^https?:\/\/.+\.snssdk\.com\/video\/play\/1\/toutiao\/.+\/mp4 url reject
-^https?:\/\/.+\.snssdk\.com\/api\/ad\/.+ url reject
-
-! 字节图片CDN广告（HTTP）
-^http:\/\/.+\.byteimg\.com\/ad-app-package url reject
-^http:\/\/.+\.byteimg\.com\/web\.business\.image url reject
-
-! 拼多多广告跳转头条
-^https?:\/\/adim\.pinduoduo\.com\/.+\/toutiao\?.+ url reject
-
-! novelapp 视频广告
-^https?:\/\/.+novelapp\.fqnovelvod\.com\/.+\/video\/.+ url reject
-
-! ══════════════════════════════════════════════════════════════════
-! IP 封锁规则（AdGuard Home 支持 /etc/hosts 形式，需配合防火墙）
-! ══════════════════════════════════════════════════════════════════
-! 以下 IP 为 APP 内置直连/用户实测广告服务器，DNS 拦截无效
-! 必须在路由器/防火墙层面封锁！
-!
-! OpenWrt/iptables 封锁命令：
-!   iptables -I FORWARD -d 101.36.166.16 -j DROP
-!   iptables -I FORWARD -d 101.36.166.17 -j DROP
-!   iptables -I FORWARD -d 101.36.166.18 -j DROP
-!   iptables -I FORWARD -d 101.36.166.19 -j DROP
-!   iptables -I FORWARD -d 49.71.37.101 -j DROP
-!   iptables -I FORWARD -d 117.71.105.23 -j DROP
-!   iptables -I FORWARD -d 218.94.207.205 -j DROP
-!   iptables -I FORWARD -d 117.92.229.188 -j DROP
-!   iptables -I FORWARD -d 180.96.2.114 -j DROP
-
-! Total: 200+ rules · v7 · 2026-03-17
-! KEY CHANGE v7: 新增URL精过滤规则（阻断广告API/视频/图片路径）
-!               穿山甲SDK / pangolin-sdk-toutiao
-!               拼多多广告跳转 / fqnovelvod 视频服务器
-!               精准URL路径匹配（比纯域名拦截更精准）
+! Total: 117 rules · novelapp.apk deep static analysis (DEX+SO+Assets) · v3 · 2026-03-17
