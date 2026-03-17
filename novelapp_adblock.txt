@@ -1,9 +1,8 @@
-! Title: novelapp.apk 广告拦截规则 (终极版 v5)
-! Description: novelapp.apk 全量扫描 + 内置DNS预解析表分析
-!              发现APP通过内置IP直连绕过DNS拦截，本版新增IP封锁规则
-! Version: 5.0.0
+! Title: novelapp.apk 广告拦截规则 (终极版 v6)
+! Description: novelapp.apk 全量扫描 + 内置DNS预解析表分析 + 用户实测补充规则合并
+! Version: 6.0.0
 ! Last modified: 2026-03-17
-! Entries: 140+
+! Entries: 170+
 !
 ! ═══════════════════════════════════════════════════════════════
 ! 重要说明（请务必阅读）
@@ -22,12 +21,11 @@
 ! 101.36.166.17   (同上)
 ! 101.36.166.18   (同上)
 ! 101.36.166.19   (同上)
-! 49.71.37.101/32
-! 117.71.105.23/32
-! 218.94.207.205/32
-! 117.92.229.188/32
-! 101.36.166.16/32
-! 180.96.2.114/32
+! 49.71.37.101    (用户实测发现：广告IP直连)
+! 117.71.105.23   (用户实测发现：广告IP直连)
+! 218.94.207.205  (用户实测发现：广告IP直连)
+! 117.92.229.188  (用户实测发现：广告IP直连)
+! 180.96.2.114    (用户实测发现：广告IP直连)
 ! ── 如果不封锁以上IP，部分广告将绕过DNS拦截继续显示 ────────────
 !
 ! 使用方法（AdGuard Home）:
@@ -46,7 +44,7 @@
 ||bytedanceapi.com^
 ||byted.org^
 
-! 字节广告专用子域（新发现：内置DNS预解析表中的广告接口）
+! 字节广告专用子域（内置DNS预解析表中的广告接口）
 ||ad.zijieapi.com^
 ||ads3-normal-lf.zijieapi.com^
 ||ads3-normal-hl.zijieapi.com^
@@ -70,6 +68,10 @@
 ||pstatp.com^
 ||ndcpp.com^
 ||draftstatic.com^
+||byteorge.com^
+||bytegoofy.com^
+||sf3-ttcdn-tos.pstatp.com^
+||pglstatp-toutiao.com^
 
 ! 字节 WebView / 远程配置
 ||ttwebview.com^
@@ -86,6 +88,7 @@
 ||amemv.com^
 ||awemeughun.com^
 ||douyin.com^
+||activity-ag.awemeughun.com^
 
 ! 巨量引擎广告平台
 ||oceanengine.com^
@@ -102,7 +105,10 @@
 ||xseclink.com^
 ||wtturl.cn^
 
-! ── 广告短链/跳转服务（新发现：dig.zjurl.cn）──────────────────────
+! 西瓜视频广告接口（用户实测新增）
+||ixigua.com^
+
+! ── 广告短链/跳转服务 ───────────────────────────────────────────
 ||dig.bdurl.net^
 ||dig.zjurl.cn^
 
@@ -115,6 +121,7 @@
 ||imgcache.qq.com^
 ||openmobile.qq.com^
 ||appsupport.qq.com^
+||api.iegadp.qq.com^
 
 ! ── 华为 HMS 数据上报 / 推送 ────────────────────────────────────
 ||dbankcloud.cn^
@@ -150,6 +157,23 @@
 ||id6.me^
 ||ugsdk.cn^
 ||xinqiucc.com^
+||mcs.snssdk.com^
+||i.snssdk.com^
+||i-lq.snssdk.com^
+||is.snssdk.com^
+||security-lq.snssdk.com^
+||tnc3-alisc1.snssdk.com^
+||tnc3-aliec2.snssdk.com^
+
+! ── 广告图片CDN精准子域（用户实测新增）────────────────────────────
+||p6-ad-sign.byteimg.com^
+||p9-ad-sign.byteimg.com^
+
+! ── 易盾即时通讯（广告推送）───────────────────────────────────────
+||msync-im1-vip6-std.easemob.com^
+
+! ── 腾讯云广告推送精准域名 ───────────────────────────────────────
+||apd-pcdnwxlogin.teg.tencent-cloud.net^
 
 ! ── libavmdlv2.so 内嵌隐蔽追踪 ──────────────────────────────────
 ||tianwenca.com^
@@ -164,6 +188,25 @@
 ||loggw-exsdk.alipay.com^
 ||render.alipay.com^
 
-! Total: 140+ rules · v5 · 2026-03-17
-! KEY CHANGE: 新增 dig.zjurl.cn + ads*.zijieapi.com 广告专用域名
-! CRITICAL: 需同时封锁IP 101.36.166.16-19 才能彻底拦截广告IP直连
+! ══════════════════════════════════════════════════════════════════
+! IP 封锁规则（AdGuard Home 支持 /etc/hosts 形式，需配合防火墙）
+! ══════════════════════════════════════════════════════════════════
+! 以下 IP 为 APP 内置直连/用户实测广告服务器，DNS 拦截无效
+! 必须在路由器/防火墙层面封锁！
+!
+! OpenWrt/iptables 封锁命令：
+!   iptables -I FORWARD -d 101.36.166.16 -j DROP
+!   iptables -I FORWARD -d 101.36.166.17 -j DROP
+!   iptables -I FORWARD -d 101.36.166.18 -j DROP
+!   iptables -I FORWARD -d 101.36.166.19 -j DROP
+!   iptables -I FORWARD -d 49.71.37.101 -j DROP
+!   iptables -I FORWARD -d 117.71.105.23 -j DROP
+!   iptables -I FORWARD -d 218.94.207.205 -j DROP
+!   iptables -I FORWARD -d 117.92.229.188 -j DROP
+!   iptables -I FORWARD -d 180.96.2.114 -j DROP
+
+! Total: 170+ rules · v6 · 2026-03-17
+! KEY CHANGE v6: 合并用户实测规则，新增 ixigua.com / byteorge.com / bytegoofy.com /
+!               p6-ad-sign.byteimg.com / p9-ad-sign.byteimg.com /
+!               精准snssdk子域 / easemob广告推送域名 /
+!               新增5个用户实测广告IP (49.71.37.101 等)
