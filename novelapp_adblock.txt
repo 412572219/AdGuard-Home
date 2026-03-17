@@ -1,17 +1,20 @@
-! Title: novelapp.apk/ipa 广告拦截规则 (终极版 v11)
-! Description: 合并 Android APK + iOS IPA + 用户实测规则 + 增强覆盖
-! Version: 11.0.0
+! Title: novelapp.apk 广告拦截规则 (终极版 v7)
+! Description: novelapp.apk 全量扫描 + 内置DNS预解析表分析 + 用户实测补充规则合并
+! Version: 7.0.0
 ! Last modified: 2026-03-17
-! Entries: 290+
+! Entries: 200+
 !
-! ═══════════════════════════════════════════════════════════════════════
+! ═══════════════════════════════════════════════════════════════
 ! 重要说明（请务必阅读）
-! ═══════════════════════════════════════════════════════════════════════
-! iOS 版本特点：完全动态加载广告配置，无硬编码域名
-! 如需彻底拦截 iOS 广告，建议：
-!   1. 使用抓包工具（如 Thor、HttpCatcher）查看实际广告请求域名
-!   2. 将新发现的域名添加到本规则
-! ═══════════════════════════════════════════════════════════════════════
+! ═══════════════════════════════════════════════════════════════
+! 经深度分析发现，novelapp 内置了"DNS预解析表"：
+!   "dig.bdurl.net" → 101.36.166.16/17/18/19 (IP直连)
+!   "dig.zjurl.cn"  → 101.36.166.16/17/18/19 (同上)
+! 这意味着 APP 会直接用 IP 访问广告服务器，绕过 DNS 拦截！
+!
+! 要彻底拦截广告，需要在 AdGuard Home 中：
+! 1. 启用 DNS 规则（本文件）
+! 2. 同时在路由器/防火墙添加如下 IP 封锁（见下方注释）
 !
 ! ── IP直连广告服务器（需在防火墙层面封锁）──────────────────────
 ! 101.36.166.16   (dig.bdurl.net / dig.zjurl.cn 广告跳转)
@@ -23,12 +26,13 @@
 ! 218.94.207.205  (用户实测发现：广告IP直连)
 ! 117.92.229.188  (用户实测发现：广告IP直连)
 ! 180.96.2.114    (用户实测发现：广告IP直连)
+! ── 如果不封锁以上IP，部分广告将绕过DNS拦截继续显示 ────────────
 !
 ! 使用方法（AdGuard Home）:
 !   过滤器 → DNS 封锁清单 → 添加自定义列表，粘贴本文件内容或上传 URL
 !
 ! 兼容: AdGuard Home · Pi-hole · uBlock Origin
-! ═══════════════════════════════════════════════════════════════════════
+! ═══════════════════════════════════════════════════════════════
 
 ! ── 字节跳动广告核心域名 ─────────────────────────────────────────
 
@@ -68,10 +72,6 @@
 ||bytegoofy.com^
 ||sf3-ttcdn-tos.pstatp.com^
 ||pglstatp-toutiao.com^
-||bytecdn.cn^
-||s3.bytecdn.cn^
-||bytemaimg.com^
-||toutiaostatic.com^
 
 ! 字节 WebView / 远程配置
 ||ttwebview.com^
@@ -82,18 +82,13 @@
 ||toutiaocloud.com^
 ||toutiaocloud.net^
 
-! 抖音/直播/视频流CDN
-||douyincdn.com^
-||douyinliving.com^
-
-! 抖音/直播相关
-||douyin.com^
-||douyinstatic.com^
-||douyinpic.com^
-||awemeughun.com^
-||aweme.com^
-||amemv.com^
+! 抖音广告接口
 ||iesdouyin.com^
+||douyinstatic.com^
+||amemv.com^
+||awemeughun.com^
+||douyin.com^
+||activity-ag.awemeughun.com^
 
 ! 巨量引擎广告平台
 ||oceanengine.com^
@@ -102,17 +97,15 @@
 ! 火山引擎（数据上报）
 ||volces.com^
 
-! 番茄 SDK / 番茄小说
+! 番茄 SDK
 ||fanqiesdk.com^
-||fqnovel.com^
-||fqnovelpic.com^
 
 ! 字节安全链接（广告落地页）
 ||xseclink.cn^
 ||xseclink.com^
 ||wtturl.cn^
 
-! 西瓜视频广告接口
+! 西瓜视频广告接口（用户实测新增）
 ||ixigua.com^
 
 ! ── 广告短链/跳转服务 ───────────────────────────────────────────
@@ -129,7 +122,6 @@
 ||openmobile.qq.com^
 ||appsupport.qq.com^
 ||api.iegadp.qq.com^
-||m.qq.com^
 
 ! ── 华为 HMS 数据上报 / 推送 ────────────────────────────────────
 ||dbankcloud.cn^
@@ -173,20 +165,9 @@
 ||tnc3-alisc1.snssdk.com^
 ||tnc3-aliec2.snssdk.com^
 
-! ── 广告图片CDN精准子域 ─────────────────────────────────────────
+! ── 广告图片CDN精准子域（用户实测新增）────────────────────────────
 ||p6-ad-sign.byteimg.com^
 ||p9-ad-sign.byteimg.com^
-||p26-tt.byteimg.com^
-
-! ── 字节直播CDN子域 ─────────────────────────────────────────────
-||p3-webcast-dycdn.byteimg.com^
-||p9-webcast-dycdn.byteimg.com^
-||lf-webcast-gr-sourcecdn.bytegecko.com^
-||lf-webcast-sourcecdn-tos.bytegecko.com^
-||lf1-webcastcdn-tos.douyinstatic.com^
-||lf3-webcastcdn-tos.douyinstatic.com^
-||lf6-webcastcdn-tos.douyinstatic.com^
-||lf9-webcastcdn-tos.douyinstatic.com^
 
 ! ── 易盾即时通讯（广告推送）───────────────────────────────────────
 ||msync-im1-vip6-std.easemob.com^
@@ -216,11 +197,8 @@
 ||loggw-exsdk.alipay.com^
 ||render.alipay.com^
 
-! ── 腾讯分析服务（用户新增抓包数据）───────────────────────────────
-||ias.tencent-cloud.net^
-
 ! ══════════════════════════════════════════════════════════════════
-! URL 精过滤规则（阻断特定广告请求路径）
+! URL 精过滤规则（阻断特定广告请求路径） v7新增
 ! ══════════════════════════════════════════════════════════════════
 
 ! 穿山甲SDK广告接口
@@ -230,7 +208,7 @@
 ! 头条视频广告
 ^https?:\/\/.+\.pglstatp-toutiao\.com\/.+\.mp4  url reject
 
-! 广告图片资源
+! 广告图片资源（ad-app-package, ad, web.business.image）
 ^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/(obj|img)\/(ad-app-package|ad)\/.+ url reject
 ^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/(obj|img)\/web\.business\.image\/.+ url reject
 ^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/obj\/ad-pattern\/renderer url reject
@@ -261,34 +239,13 @@
 ! novelapp 视频广告
 ^https?:\/\/.+novelapp\.fqnovelvod\.com\/.+\/video\/.+ url reject
 
-! 番茄小说广告API
-^https?:\/\/api5-normal-.+\.fqnovel\.com\/ url reject
-^https?:\/\/mon11-.+\.fqnovel\.com\/ url reject
-^https?:\/\/log0-applog-.+\.fqnovel\.com\/ url reject
-
 ! ══════════════════════════════════════════════════════════════════
-! iOS 专用规则（针对动态加载的广告）
+! IP 封锁规则（AdGuard Home 支持 /etc/hosts 形式，需配合防火墙）
 ! ══════════════════════════════════════════════════════════════════
-
-! 抖音视频流泛域名匹配（iOS动态广告）
-||pull-.+\.douyincdn.com^
-||pull-.+\.douyinliving.com^
-||flv-.+\.douyincdn.com^
-||flv-.+\.douyinliving.com^
-||hls-.+\.douyincdn.com^
-||hls-.+\.douyinliving.com^
-||mp4-.+\.douyincdn.com^
-
-! 字节广告联盟通用路径
-^https?:\/\/.+\/(ad|ads|advert|advertising|sponsor)\/ url reject
-^https?:\/\/.+\/api\/ad\/ url reject
-^https?:\/\/.+\/sdk\/ad\/ url reject
-^https?:\/\/.+\/union\/ url reject
-
-! ══════════════════════════════════════════════════════════════════
-! IP 封锁规则（需配合防火墙）
-! ══════════════════════════════════════════════════════════════════
-! OpenWrt/iptables:
+! 以下 IP 为 APP 内置直连/用户实测广告服务器，DNS 拦截无效
+! 必须在路由器/防火墙层面封锁！
+!
+! OpenWrt/iptables 封锁命令：
 !   iptables -I FORWARD -d 101.36.166.16 -j DROP
 !   iptables -I FORWARD -d 101.36.166.17 -j DROP
 !   iptables -I FORWARD -d 101.36.166.18 -j DROP
@@ -299,8 +256,8 @@
 !   iptables -I FORWARD -d 117.92.229.188 -j DROP
 !   iptables -I FORWARD -d 180.96.2.114 -j DROP
 
-! Total: 290+ rules · v11 · 2026-03-17
-! KEY CHANGE v11:
-!   - 新增 toutiaostatic.com (头条静态CDN - 抓包发现)
-!   - 新增 m.qq.com (腾讯广告相关 - 抓包发现)
-!   - 新增 ias.tencent-cloud.net (腾讯分析追踪 - 抓包发现)
+! Total: 200+ rules · v7 · 2026-03-17
+! KEY CHANGE v7: 新增URL精过滤规则（阻断广告API/视频/图片路径）
+!               穿山甲SDK / pangolin-sdk-toutiao
+!               拼多多广告跳转 / fqnovelvod 视频服务器
+!               精准URL路径匹配（比纯域名拦截更精准）
